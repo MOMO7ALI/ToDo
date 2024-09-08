@@ -38,4 +38,7 @@ class FirebaseFunctions {
 
     return getTasksCollection().doc(model.id).update(model.toJson());
   }
+
+
 }
+

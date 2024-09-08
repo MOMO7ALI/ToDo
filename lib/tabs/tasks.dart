@@ -4,14 +4,14 @@ import 'package:todo/firebase_functions.dart';
 import 'package:todo/task_item.dart';
 
 class TasksTab extends StatefulWidget {
-   TasksTab({super.key});
+  TasksTab({super.key});
 
   @override
   State<TasksTab> createState() => _TasksTabState();
 }
 
 class _TasksTabState extends State<TasksTab> {
-  DateTime dateTime =DateTime.now();
+  DateTime dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,9 @@ class _TasksTabState extends State<TasksTab> {
           initialDate: dateTime,
           firstDate: DateTime.now().subtract(Duration(days: 365)),
           lastDate: DateTime.now().add(Duration(days: 365)),
-          onDateSelected: (date) => (date){
-            dateTime=date;
+          onDateSelected: (date) {
             setState(() {
-
+              dateTime = date;
             });
           },
           leftMargin: 20,
@@ -49,24 +48,27 @@ class _TasksTabState extends State<TasksTab> {
                 return Column(
                   children: [
                     Text("Something went wrong "),
-                    ElevatedButton(onPressed: () {}, child: Text("try again"))
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Try again"),
+                    ),
                   ],
                 );
               }
-              var tasks=snapshot.data?.docs.map((e) => e.data()).toList();
-              if(tasks?.isEmpty??true){
-                return Text("No Tasks");
-
+              var tasks =
+              snapshot.data?.docs.map((e) => e.data()).toList();
+              if (tasks?.isEmpty ?? true) {
+                return Center(child: Text("No Tasks"));
               }
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  return TaskItem(model: tasks[index],);
+                  return TaskItem(model: tasks[index]);
                 },
                 itemCount: tasks!.length,
               );
             },
           ),
-        )
+        ),
       ],
     );
   }

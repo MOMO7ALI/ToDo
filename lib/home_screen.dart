@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/add_task_bottom_sheet.dart';
+import 'package:todo/providers/theme_provider.dart';
 import 'package:todo/tabs/setting.dart';
 import 'package:todo/tabs/tasks.dart';
 
@@ -13,18 +15,21 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       extendBody: true,
-      backgroundColor: Color(0xFFDFECDB),
+      backgroundColor: themeProvider.themeMode==ThemeMode.light?Color(0xFFDFECDB):Color(0xFF060e1e),
       appBar: AppBar(
         title: Text(
           'ToDo',
-          style: TextStyle(fontSize: 30, color: Colors.white),
+          style: TextStyle(fontSize: 30, color:themeProvider.themeMode==ThemeMode.light? Colors.white:Colors.black),
         ),
         backgroundColor: Colors.blue,
       ),
@@ -55,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+
+      color: themeProvider.themeMode==ThemeMode.light?Colors.white:Color(0xFF141922),
         notchMargin: 8,
         shape: CircularNotchedRectangle(),
         padding: EdgeInsets.zero,
@@ -82,5 +88,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<Widget> tabs = [TasksTab(), Setting()];
+  List<Widget> tabs = [TasksTab(), SettingsScreen()];
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/providers/theme_provider.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -8,15 +10,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<ThemeProvider>(context);
 
     Timer(Duration(seconds: 2), () => navigateToHome(context));
 
     return Scaffold(
-      backgroundColor: Color(0xFFDFECDB),
+      backgroundColor: prov.themeMode==ThemeMode.light?Color(0xFFDFECDB):Color(0xFF060e1e),
 
       body: Center(
         heightFactor: double.infinity,
-        child: Image.asset('assets/images/splash_background.png'),
+        child: Image.asset(prov.themeMode==ThemeMode.light?'assets/images/splash_background.png':'assets/images/splash – 1.png'),
       ),
     );
   }

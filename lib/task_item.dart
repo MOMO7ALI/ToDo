@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/firebase_functions.dart';
+import 'package:todo/providers/theme_provider.dart';
 import 'package:todo/task_model.dart';
 
 import 'edit_task_screen.dart';
@@ -12,10 +14,12 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ThemeProvider>(context);
+
     return Container(
       margin: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: provider.themeMode==ThemeMode.light?Colors.white:Color(0xFF141922),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Slidable(
@@ -65,10 +69,11 @@ class TaskItem extends StatelessWidget {
                       model.title,
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
-                          color:  model.isDone? Colors.green:Colors.black
+                          color:  provider.themeMode==ThemeMode.light?model.isDone? Colors.green:Colors.black:model.isDone? Color(0xFF61E757
+                          ):Colors.blue
                           ),
                     ),
-                    Text(model.description, style: TextStyle(fontSize: 16)),
+                    Text(model.description, style: TextStyle(fontSize: 16,)),
                   ],
                 ),
               ),
@@ -77,7 +82,8 @@ class TaskItem extends StatelessWidget {
                       'DONE!!',
                       style: TextStyle(
                         fontSize: 22,
-                        color: Colors.green,
+                        color: Color(0xFF61E757
+                        ),
                       ),
                     )
                   : IconButton(
